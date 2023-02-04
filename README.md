@@ -6,116 +6,199 @@
 
 ## Overview
 
-**OneDialect** is an advanced assistive communication system engineered to empower individuals with **auditory, vocal, and visual impairments**. By seamlessly bridging the gap between speech, text, and tactile signals, the system establishes a reliable bidirectional interaction loop. 
+**OneDialect** is a buildable assistive communication platform that translates between **speech, text, and tactile Morse output** using a combined Raspberry Pi and AVR architecture.
 
-Designed to eliminate the fragmentation in traditional assistive technology, OneDialect enables users with diverse sensory needs to communicate independently through a unified, high-performance embedded and software platform.
+The system is intended for accessibility-oriented communication scenarios involving users with visual, auditory, or speech-related communication barriers, where information may need to move between spoken language, readable text, and tactile feedback without introducing dependency on disconnected assistive tools. The project is built around a practical engineering objective: create a communication system that can move reliably between speech, text, and touch without fragmenting the user experience across separate devices or disconnected workflows. Instead of isolating each mode of interaction, OneDialect brings them into a single hardware and software stack that can be studied, reproduced, and extended in a disciplined way.
 
-[Explore the complete architecture of the Unified Assistive Communication System](https://anandps.in/projects/unified-assistive-communication-system)
-
----
-
-## Key Features
-
-- **Bidirectional Translation**: Real-time conversion across Speech, Text, and Tactile (Morse) channels.
-- **Low-Latency Interaction**: Deterministic control via a dedicated interaction layer.
-- **Wireless Connectivity**: Seamless data transfer between master and slave units via Bluetooth.
-- **Haptic Feedback**: High-precision vibration sequences for tactile communication.
-- **Robust Embedded Logic**: State-based firmware with hardware-level circuit protections.
+This repository is structured for people who want to understand the system at the level of architecture, wiring, firmware behavior, and processing flow. The implementation is organized so the device can be examined as a real embedded build rather than as a high-level concept, while still remaining grounded in accessibility-focused system design.
 
 ---
 
-## Problem Space
+## What This System Does
 
-Communication systems for differently-abled users are often fragmented, addressing isolated impairments. This creates a dependency on external assistance or requires learning specialized methods. **OneDialect** eliminates this fragmentation by enabling seamless translation across speech, text, and tactile communication channels within a single, unified device.
+- Captures speech on the single-board computer side and converts it into usable text.
+- Encodes text into Morse patterns for tactile communication.
+- Accepts physical Morse-style input from the handheld unit through a button interface.
+- Transfers data between units over Bluetooth.
+- Delivers feedback through vibration and buzzer cues for real-time interaction.
+
+---
+
+## Design Philosophy
+
+This is not a concept-only repository. The system is designed the way DIY hardware should be designed:
+
+- **Modular** enough to understand and repair.
+- **Practical** enough to prototype with accessible parts.
+- **Deterministic** where timing matters.
+- **Extendable** if you want to change the input method, output method, or processing stack.
+
+The high-level processing is handled separately from the real-time interaction layer, which keeps the device easier to tune, debug, and evolve.
 
 ---
 
 ## System Architecture
 
-The system utilizes a **dual-layer architecture** to ensure reliability and performance:
+### 1. Processing Layer
 
-### 1. Processing Layer (High-Level)
-*   **Speech Acquisition**: Captures and processes vocal input.
-*   **Transcription**: Converts speech-to-text and text-to-speech.
-*   **Encoding**: Handles text-to-Morse and Morse-to-text logic.
-*   **Platform**: Raspberry Pi 4 Model B.
+The Raspberry Pi handles the computation-heavy tasks:
 
-### 2. Interaction Layer (Real-Time)
-*   **Signal Processing**: Real-time capture of physical inputs.
-*   **Actuation**: Precise control of haptic motors and audio feedback.
-*   **Interface**: Interrupt-driven Morse input decoding.
-*   **Platform**: ATmega328P Microcontroller.
+- Speech capture
+- Speech-to-text processing
+- Text preparation
+- Morse conversion logic
+
+This layer is where you would continue expanding the project if you want to add better language support, different recognition models, logging, or richer accessibility workflows.
+
+### 2. Interaction Layer
+
+The AVR-based unit handles the time-sensitive side of the system:
+
+- Button input detection
+- Morse timing interpretation
+- Haptic output control
+- Audio cue generation
+- Bluetooth I/O for device-to-device interaction
+
+This split is one of the strengths of the project. The Pi does the thinking, and the AVR handles the physical conversation loop.
 
 ---
 
-## Hardware Integration
+## Hardware Stack
 
-| Component | Function |
+| Component | Purpose |
 | :--- | :--- |
-| **ATmega328P** | Real-time interaction and signal processing |
-| **Raspberry Pi 4** | High-level speech and text computation |
-| **Z-Axis Haptic Motor** | Tactile feedback (Linear Resonant Actuator) |
-| **HC-05 Bluetooth** | Wireless communication between layers |
-| **Active Buzzer** | Audio status and feedback |
-| **SPDT Switch** | Physical Morse input interface |
-| **Li-ion Battery** | Optimized power with built-in protection circuitry |
+| **Raspberry Pi 4** | High-level processing, speech handling, and conversion logic |
+| **ATmega328P / AVR unit** | Real-time control, tactile feedback handling, and button input |
+| **HC-05 Bluetooth module** | Wireless communication between the processing and interaction units |
+| **Haptic motor** | Tactile message output |
+| **Active buzzer** | Audible feedback and state indication |
+| **Push button / switch input** | Morse-style user input |
+| **Battery-powered supply stage** | Portable operation |
 
 ---
 
-## Development & Prototyping
+## Repository Layout
 
-![Development Stage Prototype](assets/dev_stage.jpg)
+The repository is separated by function so the electronics, firmware, and processing logic can be followed without unnecessary overlap.
 
----
+- [`src/avr`](src/avr) contains the AVR firmware for the handheld interaction unit.
+- [`src/sbc`](src/sbc) contains the Raspberry Pi side Python scripts for speech recognition and Morse conversion.
+- [`schematic`](schematic) contains the hardware references, including the latest master and slave unit schematics.
+- [`assets`](assets) contains prototype images and assembled system views.
 
-## Tech Stack
-
-- **Embedded**: C++ (Arduino IDE/AVR)
-- **High-Level**: Python (Speech Recognition, TTS)
-- **Design**: Fusion 360 (Mechanical Integration)
-- **Protocols**: UART, PWM, Bluetooth (RF)
-- **Processing**: Digital Signal Processing (DSP)
+The application logic and firmware source are maintained under the `src` path.
 
 ---
 
-## Operational Flow
+## Code Breakdown
 
-1.  **Input Phase**: User provides speech or physical Morse input.
-2.  **Processing**: The Raspberry Pi handles transcription/synthesis while the ATmega328P manages real-time signals.
-3.  **Communication**: Units exchange data wirelessly via Bluetooth.
-4.  **Feedback**: The handheld unit renders messages as tactile vibration sequences or audio cues.
+### AVR Firmware
+
+The AVR firmware in `src/avr/AVR.ino` is responsible for:
+
+- Sampling the SPDT-based input interface and resolving user interaction into dot, dash, and extended-hold control events
+- Performing timing-window evaluation to segment continuous input into character, word, and message-level payload boundaries
+- Serializing completed interaction payloads for Bluetooth-side transmission
+- Orchestrating haptic and acoustic feedback paths in response to both local and remote state transitions
+- Monitoring Bluetooth link state and reflecting connection-level events through device feedback behavior
+
+At the firmware level, this layer functions as the interaction-state controller of the device. It is where low-level input timing, event interpretation, feedback sequencing, and transport-side signaling are consolidated into a deterministic execution path on the ATmega328P.
+
+### SBC / Raspberry Pi Scripts
+
+The Python scripts in `src/sbc` currently show the speech-processing side of the project:
+
+- `voiceToText.py` handles live speech-to-text capture using Vosk and PyAudio
+- `voiceToMorseCode.py` captures spoken input and converts the recognized text into Morse code symbols
+
+These scripts are intentionally straightforward, which makes them easy to replace, improve, or integrate into a larger runtime.
+
+---
+
+## Hardware Implementation
+
+OneDialect is built on a **master-slave architecture** that separates computation-heavy processing from deterministic interaction control. This partitioning is fundamental to the reliability of the system.
+
+The **master unit** is centered on the Raspberry Pi and serves as the high-level processing domain. It handles the software-defined parts of the system, including speech capture, recognition, text preparation, and the generation of communication payloads that can be transferred to the interaction layer.
+
+The **slave unit** is centered on the ATmega328P and serves as the real-time interaction domain. This is where user input is sampled, timed events are interpreted, output signals are driven, and the tactile communication cycle is maintained with microcontroller-level predictability.
+
+This architecture is not just a structural convenience. It allows the system to assign each class of work to the platform most suited for it. The Raspberry Pi carries the variable and compute-intensive portions of the pipeline, while the ATmega328P enforces precise response behavior on the physical side of the device. The result is a system that remains easier to scale in software without compromising interaction timing at the hardware level.
+
+### Master Unit Schematic
+
+![Master Unit Schematic](schematic/master_unit_v2.jpg)
+
+The master unit schematic represents the processing and coordination layer of the device. Its primary role is to acquire communication input, execute the software-side transformation pipeline, and maintain the communication path to the handheld interaction unit. In this design, the Raspberry Pi is not treated merely as a controller board; it is the computational backbone that hosts the speech-processing runtime and the conversion logic required to bridge spoken language, textual representation, and Morse-compatible output.
+
+Within this section of the system, audio or text data enters the high-level processing path and is interpreted in software before being converted into a transportable payload. That payload is then passed outward through the Bluetooth link to the slave unit, where it becomes actionable feedback. The schematic should therefore be read as the control-side domain of the project: a domain where computation, protocol handling, and message preparation are consolidated into a single node with enough processing headroom to support future expansion.
+
+An important architectural decision is visible in that role separation. The master side does not directly assume responsibility for tactile timing, button event segmentation, or output pulse generation. Those responsibilities remain outside the Pi and are deliberately offloaded to the embedded controller. This keeps the processing layer extensible while preventing operating-system-level variability from leaking into the physical interaction loop.
+
+### Slave Unit Schematic
+
+![Slave Unit Schematic](schematic/slave_unit_v2.jpg)
+
+The slave unit schematic represents the embedded interaction layer and is where the design makes full use of the **ATmega328P** as a dedicated real-time control device. This is the portion of the system responsible for translating user intent into timed input events and converting incoming message data into tactile and audible output patterns with controlled timing behavior.
+
+At the center of this circuit, the ATmega328P coordinates several concurrent responsibilities. It monitors the button interface and classifies press duration into Morse-relevant events such as dots, dashes, and extended control holds. It tracks the temporal spacing between events so that character boundaries, word boundaries, and completed message segments can be inferred without requiring a complex front-end input device. At the same time, it manages the output side of the interaction layer by driving the haptic motor and buzzer in response to local state changes or incoming Bluetooth commands.
+
+The importance of the ATmega328P in this design is not only that it provides I/O control, but that it allows the interaction model to be enforced at the firmware level. Timing thresholds, event grouping, feedback sequencing, and Bluetooth message exchange all operate within a tightly controlled microcontroller environment. That gives the handheld unit a level of deterministic behavior that would be significantly harder to guarantee if these functions were left entirely to the higher-level processing platform.
+
+The Bluetooth module forms the bridge between the slave unit and the master unit, carrying outbound Morse-derived payloads and inbound output commands. Around that communication path, the remainder of the circuit is organized to support physical usability: the button interface for input capture, the haptic stage for tactile rendering, the buzzer for confirmation and status signaling, and the supply path for standalone operation. Taken together, the slave unit is not a passive endpoint. It is an embedded interpretation engine built around the ATmega328P, and it is this layer that gives the system its responsive, device-grade interaction behavior.
+
+### Practical Source Mapping
+
+The implementation in the repository follows the same hardware split:
+
+- `src/avr/AVR.ino` maps to the behavior of the slave unit shown in the schematic.
+- `src/sbc/voiceToText.py` and `src/sbc/voiceToMorseCode.py` map to the speech and conversion flow on the master unit.
+- `schematic/master_unit_v2.jpg` and `schematic/slave_unit_v2.png` document the current hardware reference set.
+
+---
+
+## Implementation Flow
+
+The implementation reflected in this repository follows the same architectural order as the hardware itself. The schematics define the electrical split between the processing side and the interaction side, the firmware in `src/avr/AVR.ino` defines the behavior of the ATmega328P-driven slave unit, and the scripts in `src/sbc` define the speech and conversion pipeline hosted on the Raspberry Pi. This alignment between documentation, hardware partitioning, and source layout is intentional, because it makes the system readable as an integrated engineering build rather than as a collection of isolated files.
+
+---
+
+## 3D Model Views
+
+![Base Enclosure Part](3D-model/base-enclosure-part.png)
+
+This enclosure model captures the lower structural section of the device housing and reflects the mechanical planning behind the hardware package.
+
+![Top Lid Part](3D-model/top-lid-part.png)
+
+The upper enclosure section completes the physical packaging strategy of the system.
 
 ---
 
 ## System Visuals
 
-| Master & Slave Integration | Master Unit (Internal) |
-| :---: | :---: |
-| ![Full System](assets/raspberrypi_based_master_slave_unit.jpg) | ![Master Unit](assets/assistive_device_master_unit_side_view.jpg) |
+![Full System](assets/raspberrypi_based_master_slave_unit.jpg)
+
+The assembled system view shows the relationship between the processing side and the user interaction side in deployed form.
+
+![Master Unit](assets/assistive_device_master_unit_side_view.jpg)
+
+This view highlights the physical construction of the master-side enclosure and internal placement approach used during integration.
+
+### Development Stage
+
+![Development Stage Prototype](assets/dev_stage.jpg)
+
+The development prototype captures the system in its more open engineering state, where wiring, module positioning, and iteration are easier to inspect and modify.
 
 ---
 
-## Validation & Outcomes
+## Why This Project Matters
 
-The prototype was successfully tested under real-world usage conditions, demonstrating:
-- **Accuracy**: High precision in Morse encoding and decoding.
-- **Stability**: Consistent wireless data transfer over sustained periods.
-- **Usability**: Accessible tactile feedback for users with visual or auditory impairments.
+Assistive hardware is often presented either as research, as a closed product, or as something too specialized for independent builders and engineers to approach. OneDialect takes the opposite route.
 
----
-
-## Cost Engineering
-
-The complete system is designed to be affordable and reliable, with a total build cost of approximately **₹16,700**. The Raspberry Pi 4 Model B represents the primary cost component, while other elements are optimized for value and durability.
-
----
-
-## Future Scope
-
-- Integration into **wearable form factors**.
-- Support for **multi-language** processing.
-- Implementation of **IoT-based emergency alert systems**.
-- Expansion into a broader **assistive ecosystem**.
+This project is built to be understandable at the implementation level. The electronics are approachable, the processing stack is separated cleanly from the interaction layer, and the firmware behavior is direct enough to inspect and tune. More importantly, it is an accessibility-focused system rather than as a purely technical exercise, with each architectural decision tied back to practical communication support across speech, text, and tactile interaction. If your interest is in embedded systems, accessibility hardware, human-device interaction, or reproducible assistive design, this repository is intended to be useful both as a working reference and as a foundation for further development.
 
 ---
 
