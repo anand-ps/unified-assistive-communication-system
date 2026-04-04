@@ -120,29 +120,38 @@ The complete system is designed to be affordable and reliable, with a total buil
 ---
 
 ## Project Contributors
+The system was designed and implemented by a cross-functional engineering team:
 
-The OneDialect system was developed by a multidisciplinary team of engineers specializing in systems design, power electronics, and machine learning.
+- **Ameer T S**
+    - **Designation**: Power Electronics Developer
+    - **Bio**: Electrical engineer with experience in industrial power electronics, PLCs, and SCADA.
+    - **Links**: [LinkedIn](https://www.linkedin.com/in/ameerts) | [GitHub](https://github.com/ameeribnushajahan)
 
-| Contributor | Focus Area | Connect |
-| :--- | :--- | :--- |
-| **Ameer T S** | Power Electronics Developer | [LinkedIn](https://www.linkedin.com/in/ameerts) |
-| **Muhammed Sahal M H** | Hardware Developer | [LinkedIn](https://www.linkedin.com/in/muhammed-sahal-m-h-391256194) |
-| **Ananya Ajith Kallungal** | ML Developer | [LinkedIn](https://www.linkedin.com/in/ananya-ajith-kallungal) |
-| **Anagha S** | Software Developer | [LinkedIn](https://www.linkedin.com/in/anagha-s-menon-here) • [GitHub](https://github.com/ANAGHA-20) |
-| **Sidharth S** | Software Developer | [LinkedIn](https://www.linkedin.com/in/sidharthism/) • [GitHub](https://github.com/sidharthism) |
-| **Anand P S** | Systems Engineer | [LinkedIn](https://www.linkedin.com/in/anand-ps) • [GitHub](https://github.com/anand-ps) • [Project Page](https://anandps.in/projects/unified-assistive-communication-system) |
+- **Anagha S**
+    - **Designation**: Software Developer
+    - **Bio**: Software developer focusing on machine learning, video analytics, and clean architecture.
+    - **Links**: [LinkedIn](https://www.linkedin.com/in/anagha-s-menon-here) | [GitHub](https://github.com/ANAGHA-20)
 
-<details>
-<summary><b>View Team Bios</b></summary>
+- **Muhammed Sahal M H**
+    - **Designation**: Hardware Developer
+    - **Bio**: Hardware developer focused on industrial manufacturing, power systems, and electrical maintenance.
+    - **Links**: [LinkedIn](https://www.linkedin.com/in/muhammed-sahal-m-h-391256194)
 
-- **Anand P S**: Systems Engineer specializing in distributed backend architectures, embedded systems, and production-grade software design. 
-- **Ameer T S**: Electrical engineer with experience in industrial power electronics, PLCs, and SCADA.
-- **Muhammed Sahal M H**: Hardware developer focused on industrial manufacturing, power systems, and electrical maintenance.
-- **Ananya Ajith Kallungal**: ML developer skilled in building scalable data-driven solutions and analytical models.
-- **Anagha S**: Software developer focusing on machine learning, video analytics, and clean architecture.
-- **Sidharth S**: Backend specialist with expertise in distributed systems, high-performance applications, and NoSQL databases.
+- **Ananya Ajith Kallungal**
+    - **Designation**: ML Developer
+    - **Bio**: ML developer skilled in building scalable data-driven solutions and analytical models.
+    - **Links**: [LinkedIn](https://www.linkedin.com/in/ananya-ajith-kallungal)
 
-</details>
+- **Anand P S**
+    - **Designation**: Systems Engineer
+    - **Bio**: Systems Engineer specializing in distributed backend architectures, embedded systems, and production-grade software design.
+    - **Links**: [LinkedIn](https://www.linkedin.com/in/anand-ps) | [GitHub](https://github.com/anand-ps)
+
+- **Sidharth S**
+    - **Designation**: Software Developer
+    - **Bio**: Backend specialist with expertise in distributed systems, high-performance applications, and NoSQL databases.
+    - **Links**: [LinkedIn](https://www.linkedin.com/in/sidharthism/) | [GitHub](https://github.com/sidharthism)
+
 
 ---
 © 2025 Anand P S. All rights reserved.
