@@ -124,32 +124,32 @@ The system was designed and implemented by a cross-functional engineering team:
 
 - **Ameer T S**
     - **Designation**: Power Electronics Developer
-    - **Bio**: Electrical engineer with experience in industrial power electronics, PLCs, and SCADA.
+    - **Bio**: Electrical Engineer with hands-on experience in industrial and high-voltage systems. Skilled in PLC/SCADA, protective relays, transformers, and switchgear, with a strong focus on system reliability, preventive maintenance, and efficient operations.
     - **Links**: [LinkedIn](https://www.linkedin.com/in/ameerts) | [GitHub](https://github.com/ameeribnushajahan)
 
 - **Anagha S**
     - **Designation**: Software Developer
-    - **Bio**: Software developer focusing on machine learning, video analytics, and clean architecture.
+    - **Bio**: Software developer with a strong focus on machine learning and video analytics. Combines analytical thinking with an artistic approach to build efficient and impactful solutions. Focused on clean architecture, problem-solving, and continuous technical growth.
     - **Links**: [LinkedIn](https://www.linkedin.com/in/anagha-s-menon-here) | [GitHub](https://github.com/ANAGHA-20)
 
 - **Muhammed Sahal M H**
     - **Designation**: Hardware Developer
-    - **Bio**: Hardware developer focused on industrial manufacturing, power systems, and electrical maintenance.
+    - **Bio**: Electrical engineer with experience across industrial manufacturing and power systems. Skilled in CNC machine operations, control panel assembly, diagnostics, and substation operations. Focused on system efficiency, fault resolution, and reliable electrical system performance.
     - **Links**: [LinkedIn](https://www.linkedin.com/in/muhammed-sahal-m-h-391256194)
 
 - **Ananya Ajith Kallungal**
     - **Designation**: ML Developer
-    - **Bio**: ML developer skilled in building scalable data-driven solutions and analytical models.
+    - **Bio**: Engineer skilled in machine learning, Python, and data-driven systems, with a background in electrical engineering. Focused on building scalable, efficient solutions while applying analytical models and system-level thinking to solve complex problems.
     - **Links**: [LinkedIn](https://www.linkedin.com/in/ananya-ajith-kallungal)
 
 - **Anand P S**
-    - **Designation**: Systems Engineer
-    - **Bio**: Systems Engineer specializing in distributed backend architectures, embedded systems, and production-grade software design.
+    - **Designation**: Firmware Systems Developer
+    - **Bio**: Engineer specializing in distributed backend architectures, embedded systems, firmware development, and production-grade software design. Builds efficient, fault-tolerant systems with a focus on scalability and long-term maintainability.
     - **Links**: [LinkedIn](https://www.linkedin.com/in/anand-ps) | [GitHub](https://github.com/anand-ps)
 
 - **Sidharth S**
     - **Designation**: Software Developer
-    - **Bio**: Backend specialist with expertise in distributed systems, high-performance applications, and NoSQL databases.
+    - **Bio**: Software developer specializing in distributed systems and scalable backend architecture. Experienced in building high-performance applications using React, TypeScript, Node.js, and Go, with expertise in databases like Aerospike and ArangoDB. Focused on performance optimization, system reliability, and designing robust, production-grade solutions.
     - **Links**: [LinkedIn](https://www.linkedin.com/in/sidharthism/) | [GitHub](https://github.com/sidharthism)
 
 
