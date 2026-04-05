@@ -140,7 +140,7 @@ The system was designed and implemented by a cross-functional engineering team:
 - **Ananya Ajith Kallungal**
     - **Designation**: ML Developer
     - **Bio**: Engineer skilled in machine learning, Python, and data-driven systems, with a background in electrical engineering. Focused on building scalable, efficient solutions while applying analytical models and system-level thinking to solve complex problems.
-    - **Links**: [LinkedIn](https://www.linkedin.com/in/ananya-ajith-kallungal)
+    - **Links**: [LinkedIn](https://www.linkedin.com/in/ananya-ajith-kallungal) | [GitHub](https://github.com/ananya-ajith-kallungal)
 
 - **Anand P S**
     - **Designation**: Firmware Systems Developer
