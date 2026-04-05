@@ -134,7 +134,7 @@ The system was designed and implemented by a cross-functional engineering team:
 
 - **Muhammed Sahal M H**
     - **Designation**: Hardware Developer
-    - **Bio**: Electrical engineer with experience across industrial manufacturing and power systems. Skilled in CNC machine operations, control panel assembly, diagnostics, and substation operations. Focused on system efficiency, fault resolution, and reliable electrical system performance.
+    - **Bio**: Electrical Engineer with maintenance experience across the manufacturing industry, along with experience in control panel assembly, diagnostics, and substation operations. Proven ability to resolve faults, and ensure reliable electrical system performance.
     - **Links**: [LinkedIn](https://www.linkedin.com/in/muhammed-sahal-m-h-391256194) | [GitHub](https://github.com/muhammed-sahal-m-h)
 
 - **Ananya Ajith Kallungal**
