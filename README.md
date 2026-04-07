@@ -10,7 +10,7 @@
 
 Designed to eliminate the fragmentation in traditional assistive technology, OneDialect enables users with diverse sensory needs to communicate independently through a unified, high-performance embedded and software platform.
 
-[Explore full details of the Unified Assistive Communication System](https://anandps.in/projects/unified-assistive-communication-system)
+[Explore the complete architecture of the Unified Assistive Communication System](https://anandps.in/projects/unified-assistive-communication-system)
 
 ---
 
